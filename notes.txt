@@ -1,0 +1,19 @@
+The first elements to print in the benchmark result are the two Go env variables GOOS and GOARCH. You know them already, but they are useful to compare benchmark results.
+
+Duration : This is the total time taken to execute the benchmarks
+
+The number of iterations (second column) : Remember that inside every benchmark function, there is a for loop. This number represents the number of time the for loop has run to obtain the statistics. You can increase the number of iterations by using the -benchtime flag to increase the benchmark duration. It’s not the total number of iteration executed by the benchmark.
+
+Nanoseconds per operation (third column) : it gives you an idea of how fast on average your solver run. In our example the ConcatenateBuffer function takes on average 55.97 nanoseconds to run. Whereas the ConcatenateJoin function takes on average 33.63 nanoseconds to run. The fastest function is ConcatenateJoin in the context of our benchmark.
+
+Number of cores (appended to the name of the benchmark function)
+a benchmark result is relative to the system that runs it. That’s why it’s important to know how many cores are used to run it. In our case, the benchmark is run with eight cores. You can adapt the number of cores to use for running the benchmark by using the flag -cpu. By default, it takes the maximum number of cores available.
+Number of bytes allocated per operation (fourth column) : This column is present only if you add the flag -benchmem. This will give you an idea about the memory consumption of your solvers. If your focus is to improve memory usage, then you should focus on this statistics.
+
+Number of allocations per operation (fifth column): the name of this stat speaks for itself. This is the average number of memory allocations per run. In the section [sec:Detect-memory-allocations] we will see how to detect memory allocation to improve your code
+
+To run all benchmarks in a module, use the command : $ go test -bench="."
+
+To run a specific benchmark, use this command : $ go test -bench ConcatenaWithBuffer
+
+To display memory statistics, add the flag “benchmem” : go test -bench . -benchmem
